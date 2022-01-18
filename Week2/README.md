@@ -1,0 +1,8 @@
+## Week 2 - Introduction to AC
+
+- To run Pluto notebooks, you need [Julia](https://julialang.org/downloads/) installed
+- Run `julia`.
+- Type `using Pkg; Pkg.add("Pluto");`.
+- Type `using Pluto`.
+- Type `Pluto.run()`.
+- That should open a browser window with Pluto running. You can now open the `EE2111A-sin.jl` notebook.
