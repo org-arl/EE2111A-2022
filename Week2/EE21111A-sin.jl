@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.17.1
+# v0.18.0
 
 using Markdown
 using InteractiveUtils
@@ -26,9 +26,6 @@ $y = A\sin(\omega t + \phi)$
 $\omega = 2\pi f$
 """
 
-# ╔═╡ e7153361-db7d-4430-997c-b2a183ff5586
-md"##### Primary"
-
 # ╔═╡ 69fc523d-50b6-421b-b6e1-b03685a8f9f6
 md"""
 A (Volts)
@@ -44,8 +41,14 @@ $(@bind f Slider(10:100; default=50, show_value=true))
 $(@bind ϕ Slider(0:359; default=0, show_value=true))
 """
 
+# ╔═╡ e7153361-db7d-4430-997c-b2a183ff5586
+md"##### Source Voltage ($(A) ∠ $(ϕ)°)"
+
 # ╔═╡ cb5a0462-a275-416d-8ac9-c61203fd81f0
 md"ω = 2πf = $(round(2π * f; digits=2)) rad./s"
+
+# ╔═╡ c9cab55c-538b-4aa2-9113-b13fcd5774c3
+md"T = $(round(1000/f; digits=1)) ms"
 
 # ╔═╡ c7cd5b2c-ad63-4d88-895a-8569bd124bae
 md"ϕ = $(round(deg2rad(ϕ); digits=3)) rad."
@@ -53,12 +56,9 @@ md"ϕ = $(round(deg2rad(ϕ); digits=3)) rad."
 # ╔═╡ 176434cf-ab91-44a5-aa54-f4d198759550
 t = range(0.0, 0.1; step=0.0001)
 
-# ╔═╡ e9fc6723-e9e6-4175-81f9-62c27b72de38
-md"##### Secondary"
-
 # ╔═╡ c04ca3d9-cbf1-461f-acb7-1c2c3d128ec7
 md"""
-A′ (Volts)
+A′ (Amps)
 
 $(@bind A′ Slider(0.0:0.1:10.0; default=0.0, show_value=true))
 
@@ -69,17 +69,24 @@ $(@bind ϕ′ Slider(0:359; default=0, show_value=true))
 
 # ╔═╡ c1298d43-d4c9-44a2-9d31-820a7095ee6f
 let p = plot(1000t, @. A * sin(2π * f * t + deg2rad(ϕ));
-	legend=false, ylims=(-10, 10),
+	legend=false, ylims=(-10, 10), xlims=(0, 100),
 	xlabel="Time (ms)",
-	ylabel="Voltage")
+	ylabel="Voltage (V) / Current (A)")
 	plot!(1000t, @. A′ * sin(2π * f * t + deg2rad(ϕ′)))
+	hline!([0.0]; color=:black)
 end
+
+# ╔═╡ e9fc6723-e9e6-4175-81f9-62c27b72de38
+md"##### Loop Current ($(A′) ∠ $(ϕ′)°)"
 
 # ╔═╡ aa72a51a-1973-4357-ae3a-7333abcd74e0
 md"ϕ′ = $(round(deg2rad(ϕ′); digits=3)) rad."
 
 # ╔═╡ 2a61c2ff-91e8-4e28-a59e-74aa520e59bf
 md"Δϕ = ϕ′ - ϕ = $(mod(ϕ′ - ϕ + 180, 360) - 180)°"
+
+# ╔═╡ e4b62f99-61c6-4c34-aef0-38b4366723e6
+md"Δt = $(round((ϕ′ - ϕ)/360 * 1000/f; digits=1)) ms"
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -961,9 +968,9 @@ version = "1.6.38+0"
 
 [[deps.libvorbis_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Ogg_jll", "Pkg"]
-git-tree-sha1 = "c45f4e40e7aafe9d086379e5578947ec8b95a8fb"
+git-tree-sha1 = "b910cb81ef3fe6e78bf6acee440bda86fd6ae00c"
 uuid = "f27f6e37-5d2b-51aa-960f-b287f2bc3b7a"
-version = "1.3.7+0"
+version = "1.3.7+1"
 
 [[deps.nghttp2_jll]]
 deps = ["Artifacts", "Libdl"]
@@ -999,12 +1006,14 @@ version = "0.9.1+5"
 # ╟─e7153361-db7d-4430-997c-b2a183ff5586
 # ╟─69fc523d-50b6-421b-b6e1-b03685a8f9f6
 # ╟─cb5a0462-a275-416d-8ac9-c61203fd81f0
+# ╟─c9cab55c-538b-4aa2-9113-b13fcd5774c3
 # ╟─c7cd5b2c-ad63-4d88-895a-8569bd124bae
 # ╟─176434cf-ab91-44a5-aa54-f4d198759550
 # ╟─e9fc6723-e9e6-4175-81f9-62c27b72de38
 # ╟─c04ca3d9-cbf1-461f-acb7-1c2c3d128ec7
 # ╟─aa72a51a-1973-4357-ae3a-7333abcd74e0
 # ╟─2a61c2ff-91e8-4e28-a59e-74aa520e59bf
+# ╟─e4b62f99-61c6-4c34-aef0-38b4366723e6
 # ╟─22b31097-1668-4a8b-84f5-98f2fcd92af2
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
