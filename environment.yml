@@ -1,7 +1,0 @@
-name: ee2111a
-channels:
-  - conda-forge
-dependencies:
-  - numpy
-  - matplotlib
-  - ipywidgets
