@@ -1,7 +1,0 @@
-name: ee2111a-week6
-channels:
-  - conda-forge
-dependencies:
-  - numpy
-  - matplotlib
-  - ipywidgets
